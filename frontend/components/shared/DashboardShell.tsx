@@ -40,8 +40,8 @@ export function DashboardShell({
 
   if (isLoading || !user || !isAuthorized(allowedRoles)) {
     return (
-      <div className="flex items-center justify-center h-screen bg-slate-50">
-        <div className="flex flex-col items-center gap-4">
+      <div className="flex items-center justify-center h-screen gradient-bg gradient-mesh">
+        <div className="flex flex-col items-center gap-4 glass-card p-8 rounded-2xl">
           <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
           <p className="text-slate-500 font-medium">Authenticating...</p>
         </div>
@@ -50,7 +50,7 @@ export function DashboardShell({
   }
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
+    <div className="flex h-screen overflow-hidden gradient-bg gradient-mesh">
       {/* Sidebar - desktop */}
       <Sidebar items={navItems} className="hidden lg:flex" />
       

@@ -31,30 +31,30 @@ export function Header({ title }: HeaderProps) {
   const { user, logout } = useAuth();
 
   return (
-    <header className="h-16 border-b border-slate-200 bg-white px-8 flex items-center justify-between sticky top-0 z-10">
+    <header className="h-16 glass-header px-8 flex items-center justify-between sticky top-0 z-10">
       <div className="flex items-center gap-4 flex-1">
-        <h1 className="text-xl font-semibold text-slate-800 hidden md:block">{title}</h1>
+        <h1 className="text-lg font-bold text-slate-800 hidden md:block tracking-tight">{title}</h1>
         <div className="relative max-w-sm w-full ml-4">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <Input 
             placeholder="Search cases, volunteers..." 
-            className="pl-10 h-9 bg-slate-50 border-none focus-visible:ring-indigo-500"
+            className="pl-10 h-9 glass-input rounded-full text-sm focus-visible:ring-indigo-500/30"
           />
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="relative text-slate-500">
+      <div className="flex items-center gap-3">
+        <Button variant="ghost" size="icon" className="relative text-slate-500 rounded-full hover:bg-white/50">
           <Bell className="w-5 h-5" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white" />
+          <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white animate-pulse" />
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="pl-0 gap-2 h-10 hover:bg-transparent">
-              <Avatar className="w-8 h-8">
+            <Button variant="ghost" className="pl-0 gap-2 h-10 hover:bg-white/40 rounded-full pr-3">
+              <Avatar className="w-8 h-8 ring-2 ring-white/50">
                 <AvatarImage src={user?.avatar} />
-                <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-violet-500 text-white text-xs">{user?.name?.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="text-left hidden lg:block">
                 <p className="text-sm font-medium leading-none">{user?.name}</p>
@@ -63,20 +63,20 @@ export function Header({ title }: HeaderProps) {
               <ChevronDown className="w-4 h-4 text-slate-400" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuContent align="end" className="w-56 bg-white dark:bg-slate-900 border border-slate-200 shadow-2xl rounded-xl z-50">
             <DropdownMenuGroup>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem className="rounded-lg">
                 <UserIcon className="w-4 h-4 mr-2" />
                 Profile
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="rounded-lg">
                 <Settings className="w-4 h-4 mr-2" />
                 Account Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-rose-600 focus:text-rose-600" onClick={logout}>
+              <DropdownMenuItem className="text-rose-600 focus:text-rose-600 rounded-lg" onClick={logout}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
               </DropdownMenuItem>

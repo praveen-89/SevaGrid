@@ -28,47 +28,48 @@ export default function FieldStaffDrafts() {
       <div className="space-y-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
            <div>
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight italic uppercase">Work in Progress</h2>
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Work in <span className="text-gradient">Progress</span></h2>
               <p className="text-slate-500 text-sm">Resume your incomplete case reports.</p>
            </div>
            <Link href="/fieldstaff/create-case">
-             <Button className="bg-indigo-600 font-bold">Start New Case</Button>
+             <Button className="bg-gradient-to-r from-indigo-600 to-violet-600 font-bold rounded-full shadow-lg shadow-indigo-500/20">Start New Case</Button>
            </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
            {drafts.map((draft) => (
-              <Card key={draft.id} className="border-none shadow-sm hover:shadow-md transition-all group overflow-hidden border-t-4 border-t-slate-400">
-                 <CardHeader className="pb-4">
-                    <div className="flex justify-between items-start mb-2">
+              <div key={draft.id} className="glass-card rounded-2xl overflow-hidden hover:glass-card-hover transition-all duration-500 group flex flex-col">
+                 <div className={`h-1 w-full bg-gradient-to-r from-indigo-500 to-violet-500`} />
+                 <div className="p-6 pb-4">
+                    <div className="flex justify-between items-start mb-3">
                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
                           <Clock className="w-3 h-3" /> Edited {draft.date}
                        </span>
                     </div>
-                    <CardTitle className="text-lg font-bold text-slate-900">{draft.title}</CardTitle>
-                 </CardHeader>
-                 <CardContent className="space-y-4">
+                    <h3 className="text-lg font-bold text-slate-900">{draft.title}</h3>
+                 </div>
+                 <div className="px-6 pb-4 flex-1">
                     <div className="space-y-2">
                        <div className="flex justify-between text-xs font-bold uppercase tracking-tighter">
                           <span>Completion</span>
                           <span>{draft.progress}%</span>
                        </div>
-                       <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-                          <div className="h-full bg-indigo-500" style={{ width: `${draft.progress}%` }} />
+                       <div className="h-1.5 w-full bg-slate-100/50 rounded-full overflow-hidden backdrop-blur-sm">
+                          <div className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" style={{ width: `${draft.progress}%` }} />
                        </div>
                     </div>
-                 </CardContent>
-                 <CardFooter className="pt-0 flex gap-2">
+                 </div>
+                 <div className="px-6 pb-6 flex gap-2">
                     <Link href="/fieldstaff/create-case" className="flex-1">
-                       <Button variant="outline" size="sm" className="w-full gap-2 hover:bg-indigo-50 hover:text-indigo-600">
+                       <Button variant="outline" size="sm" className="w-full gap-2 rounded-full glass-card border-white/30 hover:glass-card-hover transition-all">
                           <FileEdit className="w-3.5 h-3.5" /> Resume
                        </Button>
                     </Link>
-                    <Button variant="ghost" size="sm" className="text-rose-500 hover:bg-rose-50 px-2" onClick={() => toast.success('Draft deleted')}>
+                    <Button variant="ghost" size="sm" className="text-rose-500 hover:bg-rose-50/50 px-2 rounded-full" onClick={() => toast.success('Draft deleted')}>
                        <Trash2 className="w-4 h-4" />
                     </Button>
-                 </CardFooter>
-              </Card>
+                 </div>
+              </div>
            ))}
         </div>
 
@@ -79,8 +80,8 @@ export default function FieldStaffDrafts() {
            </div>
         )}
 
-        <div className="p-6 bg-amber-50 rounded-2xl border border-amber-100 flex gap-3 text-amber-900">
-           <AlertCircle className="w-5 h-5 shrink-0" />
+        <div className="p-6 glass-card rounded-2xl flex gap-3 text-amber-900 border border-amber-200/30">
+           <AlertCircle className="w-5 h-5 shrink-0 text-amber-600" />
            <p className="text-sm italic">Drafts are saved locally in this browser. Clearing your cache will remove incomplete drafts.</p>
         </div>
       </div>

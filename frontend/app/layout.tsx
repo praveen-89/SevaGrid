@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="h-full font-sans antialiased text-slate-900 bg-slate-50">
+      <body className="h-full font-sans antialiased text-slate-900 gradient-bg gradient-mesh">
         <AuthProvider>
           {children}
           <Toaster position="top-right" richColors />

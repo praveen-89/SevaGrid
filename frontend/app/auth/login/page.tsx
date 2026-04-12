@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { LifeBuoy, Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
+import { LifeBuoy, Mail, Lock, Loader2, ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LoginPage() {
@@ -27,26 +27,33 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px]">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen gradient-bg gradient-mesh flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Ambient orbs */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-400/10 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-violet-400/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}} />
+
+      <div className="max-w-md w-full space-y-8 relative z-10">
         <div className="text-center">
-          <Link href="/" className="inline-flex items-center gap-2 text-slate-900 font-bold text-3xl tracking-tight mb-4">
-            <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-lg shadow-indigo-100">
-              <LifeBuoy className="w-8 h-8" />
+          <Link href="/" className="inline-flex items-center gap-2.5 text-slate-900 font-bold text-3xl tracking-tight mb-4 group">
+            <div className="bg-gradient-to-br from-indigo-500 to-violet-600 p-2.5 rounded-xl text-white shadow-xl shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">
+              <LifeBuoy className="w-7 h-7" />
             </div>
-            SevaGrid
+            <span className="text-gradient">SevaGrid</span>
           </Link>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight italic uppercase">Portal Access</h1>
-          <p className="text-slate-500 mt-2 text-sm">Secure coordination platform for NGO staff and volunteers.</p>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-indigo-700 text-xs font-bold uppercase tracking-wider mt-4 mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+            Secure Portal
+          </div>
+          <p className="text-slate-500 mt-2 text-sm">Coordination platform for NGO staff and volunteers.</p>
         </div>
 
-        <Card className="border-none shadow-xl shadow-slate-200">
-          <CardHeader>
+        <div className="glass-card rounded-2xl overflow-hidden">
+          <CardHeader className="p-6">
             <CardTitle className="text-xl">Sign In</CardTitle>
             <CardDescription>Enter your credentials to access your dashboard</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-6">
               <div className="space-y-2">
                 <Label htmlFor="email">Work Email</Label>
                 <div className="relative">
@@ -55,7 +62,7 @@ export default function LoginPage() {
                     id="email" 
                     type="email" 
                     placeholder="name@organization.org" 
-                    className="pl-10 h-11" 
+                    className="pl-10 h-11 rounded-xl glass-input" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -69,12 +76,12 @@ export default function LoginPage() {
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <Input id="password" type="password" placeholder="••••••••" className="pl-10 h-11" required />
+                  <Input id="password" type="password" placeholder="••••••••" className="pl-10 h-11 rounded-xl glass-input" required />
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col gap-4 pt-4">
-              <Button type="submit" className="w-full h-11 bg-indigo-600 hover:bg-indigo-700 font-bold shadow-lg shadow-indigo-100" disabled={isLoading}>
+            <CardFooter className="flex flex-col gap-4 pt-4 px-6 pb-6">
+              <Button type="submit" className="w-full h-11 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 font-bold shadow-lg shadow-indigo-500/20 rounded-full" disabled={isLoading}>
                 {isLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                 Access Dashboard
               </Button>
@@ -83,30 +90,30 @@ export default function LoginPage() {
               </div>
             </CardFooter>
           </form>
-        </Card>
+        </div>
         
-        <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-100">
+        <div className="glass-card p-5 rounded-2xl">
            <p className="text-xs font-bold text-indigo-800 uppercase tracking-widest mb-3 flex items-center gap-1.5">
               <LifeBuoy className="w-3.5 h-3.5" /> Demo Shortcuts
            </p>
            <div className="grid grid-cols-1 gap-2">
               <Button 
                 variant="ghost" 
-                className="justify-between h-9 bg-white border border-indigo-100 text-[11px] font-bold"
+                className="justify-between h-10 glass-input rounded-full text-[11px] font-bold hover:bg-white/60 transition-all"
                 onClick={() => { setEmail('admin@sevagrid.org'); }}
               >
                 Log in as Admin <ArrowRight className="w-3 h-3 text-indigo-400" />
               </Button>
               <Button 
                 variant="ghost" 
-                className="justify-between h-9 bg-white border border-indigo-100 text-[11px] font-bold"
+                className="justify-between h-10 glass-input rounded-full text-[11px] font-bold hover:bg-white/60 transition-all"
                 onClick={() => { setEmail('field@sevagrid.org'); }}
               >
                 Log in as Field Staff <ArrowRight className="w-3 h-3 text-indigo-400" />
               </Button>
               <Button 
                 variant="ghost" 
-                className="justify-between h-9 bg-white border border-indigo-100 text-[11px] font-bold"
+                className="justify-between h-10 glass-input rounded-full text-[11px] font-bold hover:bg-white/60 transition-all"
                 onClick={() => { setEmail('volunteer@sevagrid.org'); }}
               >
                 Log in as Volunteer <ArrowRight className="w-3 h-3 text-indigo-400" />

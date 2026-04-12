@@ -15,7 +15,8 @@ import {
   Clock, 
   ArrowRight,
   ChevronRight,
-  LifeBuoy
+  LifeBuoy,
+  Sparkles
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -57,10 +58,10 @@ export default function AdminDashboard() {
   }, []);
 
   const stats = [
-    { title: 'Total Cases', value: analytics?.totalCases || 0, icon: ClipboardList, color: 'text-blue-600', bg: 'bg-blue-50', trend: '+12% from last month' },
-    { title: 'Urgent Cases', value: analytics?.urgentCases || 0, icon: AlertTriangle, color: 'text-rose-600', bg: 'bg-rose-50', trend: 'Requires immediate action' },
-    { title: 'Pending Assignments', value: analytics?.pendingAssignments || 0, icon: Users, color: 'text-amber-600', bg: 'bg-amber-50', trend: '5 volunteers available' },
-    { title: 'Completed Today', value: analytics?.completedToday || 0, icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50', trend: '2 above daily average' },
+    { title: 'Total Cases', value: analytics?.totalCases || 0, icon: ClipboardList, gradient: 'from-blue-500 to-cyan-500', glow: 'shadow-blue-500/15', trend: '+12% from last month' },
+    { title: 'Urgent Cases', value: analytics?.urgentCases || 0, icon: AlertTriangle, gradient: 'from-rose-500 to-pink-500', glow: 'shadow-rose-500/15', trend: 'Requires immediate action' },
+    { title: 'Pending Assignments', value: analytics?.pendingAssignments || 0, icon: Users, gradient: 'from-amber-500 to-orange-500', glow: 'shadow-amber-500/15', trend: '5 volunteers available' },
+    { title: 'Completed Today', value: analytics?.completedToday || 0, icon: CheckCircle2, gradient: 'from-emerald-500 to-teal-500', glow: 'shadow-emerald-500/15', trend: '2 above daily average' },
   ];
 
   return (
@@ -73,25 +74,25 @@ export default function AdminDashboard() {
             <p className="text-slate-500 mt-1">Real-time status of NGO operations and community needs.</p>
           </div>
           <div className="flex items-center gap-3">
-             <Button variant="outline" className="gap-2">
+             <Button variant="outline" className="gap-2 rounded-full glass-card border-white/30 hover:glass-card-hover transition-all">
                <Calendar className="w-4 h-4" />
                Last 30 Days
              </Button>
-             <Button className="bg-indigo-600 hover:bg-indigo-700">Export Report</Button>
+             <Button className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-full shadow-lg shadow-indigo-500/20">Export Report</Button>
           </div>
         </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, i) => (
-            <Card key={i} className="border-none shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-               <div className={`h-1 w-full ${stat.color.replace('text', 'bg')}`} />
-               <CardContent className="pt-6">
+            <div key={i} className="glass-card rounded-2xl overflow-hidden hover:glass-card-hover transition-all duration-500 group">
+               <div className={`h-1 w-full bg-gradient-to-r ${stat.gradient}`} />
+               <div className="p-6 pt-5">
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`${stat.bg} p-2.5 rounded-xl`}>
-                      <stat.icon className={`w-6 h-6 ${stat.color}`} />
+                    <div className={`bg-gradient-to-br ${stat.gradient} p-2.5 rounded-xl shadow-lg ${stat.glow} group-hover:scale-110 transition-transform`}>
+                      <stat.icon className="w-5 h-5 text-white" />
                     </div>
-                    <span className="text-xs font-medium text-emerald-600 flex items-center bg-emerald-50 px-2 py-1 rounded-full">
+                    <span className="text-xs font-medium text-emerald-600 flex items-center glass-card px-2.5 py-1 rounded-full">
                       <TrendingUp className="w-3 h-3 mr-1" />
                       14%
                     </span>
@@ -104,28 +105,28 @@ export default function AdminDashboard() {
                       {stat.trend}
                     </p>
                   </div>
-               </CardContent>
-            </Card>
+               </div>
+            </div>
           ))}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Chart */}
-          <Card className="lg:col-span-2 border-none shadow-sm">
-            <CardHeader className="flex flex-row items-center justify-between">
+          <div className="lg:col-span-2 glass-card rounded-2xl overflow-hidden">
+            <div className="flex flex-row items-center justify-between p-6 pb-0">
               <div>
-                <CardTitle className="text-lg">Case Intake Trend</CardTitle>
-                <CardDescription>Number of reports received per day</CardDescription>
+                <h3 className="text-lg font-semibold">Case Intake Trend</h3>
+                <p className="text-sm text-slate-500">Number of reports received per day</p>
               </div>
-              <Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button>
-            </CardHeader>
-            <CardContent className="h-[300px] mt-4">
+              <Button variant="ghost" size="icon" className="rounded-full"><MoreVertical className="w-4 h-4" /></Button>
+            </div>
+            <div className="p-6 h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={analytics?.weeklyTrend || []}>
                   <defs>
                     <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.1}/>
-                      <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#6366f1" stopOpacity={0.15}/>
+                      <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -142,28 +143,28 @@ export default function AdminDashboard() {
                     tick={{fill: '#94a3b8', fontSize: 12}}
                   />
                   <Tooltip 
-                    contentStyle={{borderRadius: '12px', border: 'none'}}
+                    contentStyle={{borderRadius: '16px', border: 'none', backdropFilter: 'blur(16px)', background: 'rgba(255,255,255,0.8)'}}
                   />
                   <Area 
                     type="monotone" 
                     dataKey="count" 
-                    stroke="#4f46e5" 
+                    stroke="#6366f1" 
                     strokeWidth={3} 
                     fillOpacity={1} 
                     fill="url(#colorCount)" 
                   />
                 </AreaChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          {/* Quick Stats / Category Breakdown */}
-          <Card className="border-none shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg">Cases by Category</CardTitle>
-              <CardDescription>Major service areas</CardDescription>
-            </CardHeader>
-            <CardContent>
+          {/* Category Breakdown */}
+          <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="p-6 pb-0">
+              <h3 className="text-lg font-semibold">Cases by Category</h3>
+              <p className="text-sm text-slate-500">Major service areas</p>
+            </div>
+            <div className="p-6">
               <div className="space-y-5">
                 {Object.entries(analytics?.casesByCategory || {}).slice(0, 5).map(([cat, count]) => (
                   <div key={cat} className="space-y-2">
@@ -171,9 +172,9 @@ export default function AdminDashboard() {
                       <span className="font-medium text-slate-700">{cat}</span>
                       <span className="text-slate-500">{count}</span>
                     </div>
-                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-slate-100/80 rounded-full overflow-hidden backdrop-blur-sm">
                       <div 
-                        className="h-full bg-indigo-500 rounded-full" 
+                        className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" 
                         style={{ width: `${(count / 156) * 100}%` }}
                       />
                     </div>
@@ -181,28 +182,28 @@ export default function AdminDashboard() {
                 ))}
               </div>
               <Link href="/admin/analytics">
-                <Button variant="outline" className="w-full mt-6">View Detailed Analytics</Button>
+                <Button variant="outline" className="w-full mt-6 rounded-full glass-card border-white/30 hover:glass-card-hover transition-all">View Detailed Analytics</Button>
               </Link>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
         {/* Recent Activity / Case Queue Preview */}
-        <Card className="border-none shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between">
+        <div className="glass-card rounded-2xl overflow-hidden">
+          <div className="flex flex-row items-center justify-between p-6 pb-0">
             <div>
-              <CardTitle className="text-lg">Recent Incoming Cases</CardTitle>
-              <CardDescription>Latest community reports awaiting review</CardDescription>
+              <h3 className="text-lg font-semibold">Recent Incoming Cases</h3>
+              <p className="text-sm text-slate-500">Latest community reports awaiting review</p>
             </div>
             <Link href="/admin/cases">
-              <Button variant="link" className="text-indigo-600">View All Queue</Button>
+              <Button variant="link" className="text-indigo-600 font-bold">View All Queue</Button>
             </Link>
-          </CardHeader>
-          <CardContent>
+          </div>
+          <div className="p-6">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-slate-100 text-slate-500 font-medium">
+                  <tr className="border-b border-slate-100/50 text-slate-500 font-medium">
                     <th className="pb-3 pl-2">Case Details</th>
                     <th className="pb-3">Category</th>
                     <th className="pb-3">Urgency</th>
@@ -210,9 +211,9 @@ export default function AdminDashboard() {
                     <th className="pb-3 text-right pr-2">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50">
+                <tbody className="divide-y divide-slate-50/50">
                   {recentCases.map((c) => (
-                    <tr key={c.id} className="group hover:bg-slate-50/50 transition-colors">
+                    <tr key={c.id} className="group hover:bg-white/40 transition-colors rounded-lg">
                       <td className="py-4 pl-2">
                         <div>
                           <p className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{c.title}</p>
@@ -223,7 +224,7 @@ export default function AdminDashboard() {
                         </div>
                       </td>
                       <td className="py-4">
-                        <span className="text-xs font-medium bg-slate-100 text-slate-600 px-2 py-1 rounded-md">
+                        <span className="text-xs font-medium glass-card px-2.5 py-1 rounded-full text-slate-600">
                           {c.category}
                         </span>
                       </td>
@@ -235,7 +236,7 @@ export default function AdminDashboard() {
                       </td>
                       <td className="py-4 text-right pr-2">
                         <Link href={`/admin/cases/${c.id}`}>
-                          <Button size="sm" variant="ghost" className="h-8 px-2">Assign</Button>
+                          <Button size="sm" variant="ghost" className="h-8 px-3 rounded-full hover:bg-indigo-50/50 text-indigo-600 font-bold">Assign</Button>
                         </Link>
                       </td>
                     </tr>
@@ -253,8 +254,8 @@ export default function AdminDashboard() {
                 <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </DashboardShell>
   );

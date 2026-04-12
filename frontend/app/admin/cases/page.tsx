@@ -98,11 +98,11 @@ export default function AdminCaseQueue() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Incoming Needs Queue</h2>
           <div className="flex items-center gap-2">
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2 rounded-full glass-card border-white/30 hover:glass-card-hover transition-all">
               <Download className="w-4 h-4" />
               Export
             </Button>
-            <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2">
+            <Button className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 gap-2 rounded-full shadow-lg shadow-indigo-500/20">
               <Plus className="w-4 h-4" />
               New Manual Intake
             </Button>
@@ -110,23 +110,22 @@ export default function AdminCaseQueue() {
         </div>
 
         {/* Filters Card */}
-        <Card className="border-none shadow-sm">
-          <CardContent className="pt-6">
+        <div className="glass-card rounded-2xl p-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="relative md:col-span-2">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <Input 
                   placeholder="Search by ID, title, or address..." 
-                  className="pl-10"
+                  className="pl-10 rounded-full glass-input"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
               <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v || 'all')}>
-                <SelectTrigger>
+                <SelectTrigger className="rounded-full glass-input">
                   <SelectValue placeholder="All Statuses" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white dark:bg-slate-900 shadow-2xl border-slate-200 rounded-xl z-50">
                   <SelectItem value="all">All Statuses</SelectItem>
                   <SelectItem value="SUBMITTED">Submitted</SelectItem>
                   <SelectItem value="READY_FOR_ASSIGNMENT">Ready for Assignment</SelectItem>
@@ -136,10 +135,10 @@ export default function AdminCaseQueue() {
                 </SelectContent>
               </Select>
               <Select value={priorityFilter} onValueChange={(v) => setPriorityFilter(v || 'all')}>
-                <SelectTrigger>
+                <SelectTrigger className="rounded-full glass-input">
                   <SelectValue placeholder="All Priorities" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white dark:bg-slate-900 shadow-2xl border-slate-200 rounded-xl z-50">
                   <SelectItem value="all">All Priorities</SelectItem>
                   <SelectItem value="URGENT">Urgent</SelectItem>
                   <SelectItem value="HIGH">High</SelectItem>
@@ -148,13 +147,12 @@ export default function AdminCaseQueue() {
                 </SelectContent>
               </Select>
             </div>
-          </CardContent>
-        </Card>
+        </div>
 
         {/* Results Table */}
-        <Card className="border-none shadow-sm overflow-hidden">
+        <div className="glass-card rounded-2xl overflow-hidden">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-white/30">
               <TableRow>
                 <TableHead className="w-[300px]">Case Info</TableHead>
                 <TableHead>Location</TableHead>
@@ -174,14 +172,14 @@ export default function AdminCaseQueue() {
             </TableHeader>
             <TableBody>
               {filteredCases.map((c) => (
-                <TableRow key={c.id} className="group hover:bg-slate-50/50">
+                <TableRow key={c.id} className="group hover:bg-white/40 transition-colors">
                   <TableCell>
                     <div className="space-y-1">
                       <p className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors underline-offset-4 decoration-indigo-600/30">
                         {c.title}
                       </p>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono uppercase bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">#{c.id}</span>
+                        <span className="text-[10px] font-mono uppercase glass-card px-1.5 py-0.5 rounded-full text-slate-500">#{c.id}</span>
                         <span className="text-[11px] font-medium text-slate-400 capitalize">• {c.category}</span>
                       </div>
                     </div>
@@ -212,21 +210,21 @@ export default function AdminCaseQueue() {
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-white/50">
                           <MoreHorizontal className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuContent align="end" className="w-48 bg-white dark:bg-slate-900 shadow-2xl border-slate-200 rounded-xl z-50">
                         <DropdownMenuItem asChild>
-                          <Link href={`/admin/cases/${c.id}`} className="cursor-pointer flex items-center">
+                          <Link href={`/admin/cases/${c.id}`} className="cursor-pointer flex items-center rounded-lg">
                             <ExternalLink className="w-4 h-4 mr-2" /> View Details
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer">
+                        <DropdownMenuItem className="cursor-pointer rounded-lg">
                            <Users className="w-4 h-4 mr-2" /> Quick Assign
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="cursor-pointer text-rose-600">
+                        <DropdownMenuItem className="cursor-pointer text-rose-600 rounded-lg">
                            <AlertTriangle className="w-4 h-4 mr-2" /> Mark Escalated
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -240,14 +238,14 @@ export default function AdminCaseQueue() {
                     <div className="flex flex-col items-center justify-center gap-2">
                        <FileText className="w-8 h-8 opacity-20" />
                        <p>No cases match your filters.</p>
-                       <Button variant="link" onClick={() => { setSearch(''); setStatusFilter('all'); setPriorityFilter('all'); }}>Clear all filters</Button>
+                       <Button variant="link" className="text-indigo-600" onClick={() => { setSearch(''); setStatusFilter('all'); setPriorityFilter('all'); }}>Clear all filters</Button>
                     </div>
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
-        </Card>
+        </div>
       </div>
     </DashboardShell>
   );
