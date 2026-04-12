@@ -150,8 +150,8 @@ export default function FieldStaffDashboard() {
                 </div>
                 <div className="p-6 space-y-4">
                    {[
-                     { title: "Sewerage issue - Sector 7", date: "2 hours ago" },
-                     { title: "Street light repair needed", date: "Yesterday" }
+                     { title: "Sewerage issue - Sector 7, HSR", date: "2 hours ago" },
+                     { title: "Street light repair needed, Andheri", date: "Yesterday" }
                    ].map((draft, i) => (
                       <div key={i} className="p-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors group cursor-pointer backdrop-blur-sm">
                          <div className="flex justify-between items-center">
@@ -176,11 +176,11 @@ export default function FieldStaffDashboard() {
                 <div className="p-6 space-y-4">
                    <div className="flex gap-3">
                       <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0 animate-pulse" />
-                      <p className="text-xs text-slate-600">Admin requested more details on "Case #102: Sector 4 Shortage".</p>
+                      <p className="text-xs text-slate-600">Admin requested more details on "Case #102: HSR Layout Shortage".</p>
                    </div>
                    <div className="flex gap-3">
                       <div className="w-2 h-2 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                      <p className="text-xs text-slate-600">Your case in "West Side" has been marked as completed.</p>
+                      <p className="text-xs text-slate-600">Your case in "Andheri West" has been marked as completed.</p>
                    </div>
                 </div>
              </div>

@@ -60,7 +60,7 @@ export default function VolunteerDashboard() {
         {/* Welcome Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
            <div>
-              <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Salam, {user?.name}! 👋</h2>
+              <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Namaste, {user?.name}! 👋</h2>
               <p className="text-slate-500 mt-1">Ready to make a difference today? You have {activeTasks.length} active assignments.</p>
            </div>
            <div className="flex items-center gap-1 glass-card p-1.5 rounded-full">

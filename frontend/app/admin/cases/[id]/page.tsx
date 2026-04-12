@@ -329,11 +329,11 @@ export default function CaseDetailPage() {
                <div className="px-6 pb-6 space-y-4">
                   <div className="flex items-center gap-3">
                      <Avatar className="w-8 h-8 ring-1 ring-white/50">
-                        <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Michael" />
-                        <AvatarFallback>MC</AvatarFallback>
+                        <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Amit" />
+                        <AvatarFallback>AK</AvatarFallback>
                      </Avatar>
                      <div className="text-sm">
-                        <p className="font-bold text-slate-900">Michael Chen</p>
+                        <p className="font-bold text-slate-900">Amit Kumar</p>
                         <p className="text-xs text-slate-400 font-medium">Field Staff</p>
                      </div>
                   </div>

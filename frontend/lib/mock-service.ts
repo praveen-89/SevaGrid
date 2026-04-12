@@ -2,10 +2,10 @@ import { Case, User, Volunteer, AnalyticsData, CaseStatus, UserRole } from './ty
 import { MOCK_CASES, MOCK_USERS, MOCK_VOLUNTEERS, MOCK_ANALYTICS } from './mock-data';
 
 const STORAGE_KEYS = {
-  CASES: 'sevagrid_cases',
-  USERS: 'sevagrid_users',
-  VOLUNTEERS: 'sevagrid_volunteers',
-  CURRENT_USER: 'sevagrid_current_user'
+  CASES: 'sevagrid_cases_v2',
+  USERS: 'sevagrid_users_v2',
+  VOLUNTEERS: 'sevagrid_volunteers_v2',
+  CURRENT_USER: 'sevagrid_current_user_v2'
 };
 
 class MockService {

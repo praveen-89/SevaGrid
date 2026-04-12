@@ -18,9 +18,9 @@ import { toast } from 'sonner';
 
 export default function FieldStaffDrafts() {
   const drafts = [
-    { id: 'd1', title: 'Sewerage issue - Sector 7', date: '2 hours ago', progress: 40 },
-    { id: 'd2', title: 'Street light repair needed - North Hill', date: 'Yesterday', progress: 80 },
-    { id: 'd3', title: 'Medical request - East Slums', date: '3 days ago', progress: 20 },
+    { id: 'd1', title: 'Sewerage issue - Sector 7, HSR', date: '2 hours ago', progress: 40 },
+    { id: 'd2', title: 'Street light repair needed - Malabar Hill', date: 'Yesterday', progress: 80 },
+    { id: 'd3', title: 'Medical request - Dharavi Slums', date: '3 days ago', progress: 20 },
   ];
 
   return (

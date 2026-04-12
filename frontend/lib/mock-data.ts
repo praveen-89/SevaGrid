@@ -3,24 +3,24 @@ import { Case, User, Volunteer, AnalyticsData } from './types';
 export const MOCK_USERS: User[] = [
   {
     id: 'admin-1',
-    name: 'Sarah Johnson',
+    name: 'Priya Sharma',
     email: 'admin@sevagrid.org',
     role: 'ADMIN',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah'
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya'
   },
   {
     id: 'field-1',
-    name: 'Michael Chen',
+    name: 'Amit Kumar',
     email: 'field@sevagrid.org',
     role: 'FIELD_STAFF',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Michael'
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Amit'
   },
   {
     id: 'vol-1',
-    name: 'Elena Rodriguez',
+    name: 'Neha Gupta',
     email: 'volunteer@sevagrid.org',
     role: 'VOLUNTEER',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Elena'
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Neha'
   }
 ];
 
@@ -33,48 +33,48 @@ export const MOCK_VOLUNTEERS: Volunteer[] = [
     activeTasks: 0,
     rating: 4.8,
     specialties: ['First Aid', 'Logistics', 'Driving'],
-    location: 'Downtown District'
+    location: 'Connaught Place'
   },
   {
     id: 'vol-2',
-    name: 'David Smith',
-    email: 'david@volunteer.org',
+    name: 'Rahul Verma',
+    email: 'rahul@volunteer.org',
     role: 'VOLUNTEER',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul',
     status: 'BUSY',
     completedTasks: 25,
     activeTasks: 1,
     rating: 4.9,
     specialties: ['Food Distribution', 'Translation'],
-    location: 'West Side'
+    location: 'Andheri West'
   },
   {
     id: 'vol-3',
-    name: 'Amina Begum',
-    email: 'amina@volunteer.org',
+    name: 'Ayesha Desai',
+    email: 'ayesha@volunteer.org',
     role: 'VOLUNTEER',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Amina',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ayesha',
     status: 'AVAILABLE',
     completedTasks: 8,
     activeTasks: 0,
     rating: 4.7,
     specialties: ['Medical Staff', 'Elderly Care'],
-    location: 'North Hill'
+    location: 'Malabar Hill'
   }
 ];
 
 export const MOCK_CASES: Case[] = [
   {
     id: 'case-1',
-    title: 'Emergency Water Shortage in Sector 4',
+    title: 'Emergency Water Shortage in Sector 4, HSR',
     description: 'Main water pipe burst affecting 50 households. Need immediate distribution of drinking water units.',
     category: 'Water & Sanitation',
     severity: 'URGENT',
     status: 'SUBMITTED',
     peopleAffected: 250,
     location: {
-      address: '123 Market St, Sector 4',
-      area: 'Downtown',
+      address: '123 MG Road, Sector 4',
+      area: 'Connaught Place',
     },
     fieldStaffId: 'field-1',
     createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
@@ -85,7 +85,7 @@ export const MOCK_CASES: Case[] = [
         timestamp: new Date(Date.now() - 3600000 * 2).toISOString(),
         status: 'SUBMITTED',
         actorId: 'field-1',
-        actorName: 'Michael Chen',
+        actorName: 'Amit Kumar',
         note: 'Reported by community leader.'
       }
     ]
@@ -93,14 +93,14 @@ export const MOCK_CASES: Case[] = [
   {
     id: 'case-2',
     title: 'Food Supply Support for Elderly Home',
-    description: 'Regular monthly supply of non-perishable food items requested for the Green Valley Senior Home.',
+    description: 'Regular monthly supply of non-perishable food items requested for the Aashirwad Old Age Home.',
     category: 'Food Security',
     severity: 'MEDIUM',
     status: 'ASSIGNED',
     peopleAffected: 45,
     location: {
-      address: '45 Green Valley Rd',
-      area: 'West Side',
+      address: '45 Link Road',
+      area: 'Andheri West',
     },
     fieldStaffId: 'field-1',
     assignedVolunteerId: 'vol-2',
@@ -112,36 +112,36 @@ export const MOCK_CASES: Case[] = [
         timestamp: new Date(Date.now() - 86400000).toISOString(),
         status: 'SUBMITTED',
         actorId: 'field-1',
-        actorName: 'Michael Chen'
+        actorName: 'Amit Kumar'
       },
       {
         id: 'h3',
         timestamp: new Date(Date.now() - 3600000 * 5).toISOString(),
         status: 'READY_FOR_ASSIGNMENT',
         actorId: 'admin-1',
-        actorName: 'Sarah Johnson'
+        actorName: 'Priya Sharma'
       },
       {
         id: 'h4',
         timestamp: new Date(Date.now() - 3600000).toISOString(),
         status: 'ASSIGNED',
         actorId: 'admin-1',
-        actorName: 'Sarah Johnson',
-        note: 'David Smith assigned to this task.'
+        actorName: 'Priya Sharma',
+        note: 'Rahul Verma assigned to this task.'
       }
     ]
   },
   {
     id: 'case-3',
     title: 'Medical Camp Logistics Assistance',
-    description: 'Upcoming medical camp in East Slums requires assistance in setting up tents and managing patient queues.',
+    description: 'Upcoming medical camp in Dharavi needs assistance in setting up tents and managing patient queues.',
     category: 'Health',
     severity: 'HIGH',
     status: 'COMPLETED',
     peopleAffected: 500,
     location: {
-      address: 'East Slum Area, Near Railway Line',
-      area: 'East Side',
+      address: 'Dharavi, Near Mahim Station',
+      area: 'Dharavi',
     },
     fieldStaffId: 'field-1',
     assignedVolunteerId: 'vol-1',
@@ -153,14 +153,14 @@ export const MOCK_CASES: Case[] = [
         timestamp: new Date(Date.now() - 86400000 * 3).toISOString(),
         status: 'SUBMITTED',
         actorId: 'field-1',
-        actorName: 'Michael Chen'
+        actorName: 'Amit Kumar'
       },
       {
         id: 'h6',
         timestamp: new Date(Date.now() - 86400000 * 2).toISOString(),
         status: 'COMPLETED',
         actorId: 'vol-1',
-        actorName: 'Elena Rodriguez'
+        actorName: 'Neha Gupta'
       }
     ],
     proofOfCompletion: {

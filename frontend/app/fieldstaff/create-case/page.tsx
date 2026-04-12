@@ -112,7 +112,7 @@ export default function CreateCasePage() {
                 onChange={(e) => updateField('title', e.target.value)}
                 className="rounded-xl glass-input h-11"
               />
-              <p className="text-xs text-slate-400">Example: Urgent water shortage at Sector 4 Slums</p>
+              <p className="text-xs text-slate-400">Example: Urgent water shortage at HSR Layout Slums</p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="category">Category</Label>
@@ -180,7 +180,7 @@ export default function CreateCasePage() {
               <Label htmlFor="address">Street Address / Landmark</Label>
               <Input 
                 id="address" 
-                placeholder="123 Help St, Near Main Gate" 
+                placeholder="Flat 12, XYZ Society, Near Shivaji Park" 
                 value={formData.address}
                 onChange={(e) => updateField('address', e.target.value)}
                 className="rounded-xl glass-input h-11"
@@ -193,10 +193,10 @@ export default function CreateCasePage() {
                   <SelectValue placeholder="Select community" />
                 </SelectTrigger>
                 <SelectContent className="bg-white dark:bg-slate-900 shadow-2xl border-slate-200 rounded-xl z-50">
-                  <SelectItem value="Downtown">Downtown District</SelectItem>
-                  <SelectItem value="West Side">West Side Residential</SelectItem>
-                  <SelectItem value="East Side">East Side Industrial</SelectItem>
-                  <SelectItem value="North Hill">North Hill Slums</SelectItem>
+                  <SelectItem value="Connaught Place">Connaught Place</SelectItem>
+                  <SelectItem value="Andheri West">Andheri West Residential</SelectItem>
+                  <SelectItem value="Dharavi">Dharavi Industrial</SelectItem>
+                  <SelectItem value="Malabar Hill">Malabar Hill Slums</SelectItem>
                 </SelectContent>
               </Select>
             </div>

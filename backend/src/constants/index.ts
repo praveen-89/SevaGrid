@@ -1,0 +1,51 @@
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  FIELD_STAFF = 'FIELD_STAFF',
+  VOLUNTEER = 'VOLUNTEER',
+}
+
+export enum CaseStatus {
+  DRAFT = 'DRAFT',
+  SUBMITTED = 'SUBMITTED',
+  UNDER_REVIEW = 'UNDER_REVIEW',
+  READY_FOR_ASSIGNMENT = 'READY_FOR_ASSIGNMENT',
+  ASSIGNED = 'ASSIGNED',
+  ACCEPTED = 'ACCEPTED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED_PENDING_VERIFICATION = 'COMPLETED_PENDING_VERIFICATION',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+  ESCALATED = 'ESCALATED',
+}
+
+export enum CaseSeverity {
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+  URGENT = 'URGENT',
+}
+
+export enum AssignmentStatus {
+  ASSIGNED = 'ASSIGNED',
+  ACCEPTED = 'ACCEPTED',
+  REJECTED = 'REJECTED',
+  CANCELLED = 'CANCELLED',
+  COMPLETED = 'COMPLETED',
+}
+
+export enum VolunteerStatus {
+  AVAILABLE = 'AVAILABLE',
+  BUSY = 'BUSY',
+  OFFLINE = 'OFFLINE',
+}
+
+export enum AttachmentKind {
+  INTAKE = 'INTAKE',
+  PROOF = 'PROOF',
+}
+
+export enum ProofVerificationStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
