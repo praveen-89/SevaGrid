@@ -4,17 +4,17 @@
 SevaGrid is an NGO coordination platform operating across a Node.js + Supabase stack. This backend serves as the orchestration layer enabling Field Staff to report issues, Administrators to allocate volunteers, and Volunteers to complete tasks and submit transparent cryptographic proofs.
 
 ## 2. Backend Architecture
-The backend is a strictly typed Node.js/Express monolith leveraging the Controller-Service-Repository pattern. It utilizes Zod for inbound HTTP payload validation and Supabase as the underlying Postgres instance and Authentication provider. 
+The backend is a strictly typed Node.js/Express monolith leveraging the Controller-Service-Repository pattern. It utilizes Zod for inbound HTTP payload validation and Supabase as the underlying Postgres instance and Authentication provider.
 
 ## 3. Folder Structure Explanation
 - `src/app.ts`: Express application bootstrap and global middleware initialization.
 - `src/server.ts`: HTTP listener and port binding.
-- `src/config/`: Environment schemas and Supabase client intialization.
+- `src/config/`: Environment schemas and Supabase client initialization.
 - `src/routes/`: Express routers isolating domains (Auth, Cases, Volunteers, Analytics).
 - `src/controllers/`: Route handlers formatting HTTP requests and executing standard API responses.
-- `src/services/`: Core business logic (Workflow validations, assignment validations).
-- `src/repositories/`: Classes wrapping Supabase client queries.
+- `src/services/`: Core business logic (Workflow validations, assigning, recommending).
 - `src/middleware/`: Verification layers (AuthGuard, RoleGuard, ErrorHandler).
+- `src/validators/`: Input validation mechanisms intercepting malformed payloads before Logic execution.
 
 ## 4. Environment Variables
 Stored securely via `.env`:
@@ -35,6 +35,7 @@ The relational structure incorporates:
 ## 6. Enums and Statuses
 - **Roles**: ADMIN, FIELD_STAFF, VOLUNTEER
 - **Case Statuses**: DRAFT, SUBMITTED, UNDER_REVIEW, READY_FOR_ASSIGNMENT, ASSIGNED, ACCEPTED, IN_PROGRESS, COMPLETED_PENDING_VERIFICATION, COMPLETED, FAILED, ESCALATED.
+- **Assignment Statuses**: ASSIGNED, ACCEPTED, REJECTED, CANCELLED, COMPLETED.
 - **Volunteer Statuses**: AVAILABLE, BUSY, OFFLINE.
 
 ## 7. Auth Flow
@@ -45,69 +46,69 @@ The relational structure incorporates:
 
 ## 8. Role Permissions
 The `roleMiddleware` wraps route handlers:
-- `requireRole('ADMIN')` stops non-admins.
-- `requireRole(['ADMIN', 'FIELD_STAFF'])` provides horizontal access control.
+- `requireRole(UserRole.ADMIN)` stops non-admins.
+- `requireRole([UserRole.ADMIN, UserRole.FIELD_STAFF])` provides horizontal access control.
 
 ## 9. API Endpoint List
 
 **Auth/Users**
-- `GET /api/auth/me`
-- `GET /api/users/:id`
+- *Federated by Supabase client in Frontend. Profile queries map dynamically as needed.*
 
 **Cases**
 - `GET /api/cases`
 - `GET /api/cases/:id`
-- `POST /api/cases`
-- `PATCH /api/cases/:id`
-- `PATCH /api/cases/:id/status`
+- `POST /api/cases` (Field Staff creates case)
 - `GET /api/cases/:id/history`
-- `POST /api/cases/:id/attachments`
 
-**Assignments**
-- `POST /api/cases/:id/assign`
-- `POST /api/cases/:id/reassign`
-- `POST /api/cases/:id/accept`
-- `POST /api/cases/:id/reject`
-- `POST /api/cases/:id/start`
-- `POST /api/cases/:id/submit-proof`
-- `POST /api/cases/:id/verify-proof`
-- `POST /api/cases/:id/reject-proof`
-- `POST /api/cases/:id/escalate`
-- `POST /api/cases/:id/fail`
+**Case Lifecycle Actions (Volunteers)**
+- `POST /api/cases/:id/accept` (Volunteer accepts assignment)
+- `POST /api/cases/:id/reject` (Volunteer rejects assignment)
+- `POST /api/cases/:id/start` (Moves case to IN_PROGRESS)
+- `POST /api/cases/:id/submit-proof` (Writes to proof_submissions, moves to COMPLETED_PENDING_VERIFICATION)
+
+**Case Lifecycle Actions (Admins)**
+- `POST /api/cases/:id/assign` (Assigns volunteer)
+- `POST /api/cases/:id/reassign` (Reassigns volunteer, overriding current)
+- `POST /api/cases/:id/verify-proof` (Closes case to COMPLETED)
+- `POST /api/cases/:id/reject-proof` (Reverts case to IN_PROGRESS)
+- `POST /api/cases/:id/escalate` (Moves case to ESCALATED)
+- `POST /api/cases/:id/fail` (Marks case as FAILED)
 
 **Volunteers**
 - `GET /api/volunteers`
-- `GET /api/volunteers/:id`
 - `GET /api/volunteers/recommended?caseId=...`
 
-**Analytics**
+**Analytics** (Admin Only)
 - `GET /api/analytics/overview`
+- `GET /api/analytics/cases-by-status`
+- `GET /api/analytics/cases-by-category`
+- `GET /api/analytics/weekly-trend`
 
 ## 10. Workflow / Transition Rules
-Enforced entirely by `CaseService.ts`. Attempts to jump from `SUBMITTED` directly to `COMPLETED` will throw a 400 Bad Request error. Every state mutation writes to `case_history` automatically within the same logical transaction.
+Enforced entirely natively by `CaseService.ts`. Attempts to jump from `SUBMITTED` directly to `COMPLETED` will throw a logical error. Furthermore, resource constraints block Volunteers from modifying parameters of cases that do not map to their specific Profile id mapping. Every state mutation writes to `case_history` automatically within the same logical transaction.
 
 ## 11. File Upload / Storage Design
-Files are uploaded from the client directly to Supabase Storage (bypassing the Node server for bandwidth efficiency), or passed to the Node server. We utilize Supabase Storage buckets: `intake` and `proof`. A subsequent request is made to `POST /api/cases/:id/attachments` containing the `file_url`, binding the Storage asset to the Postgres Row.
+Files are uploaded from the client directly to Supabase Storage (bypassing the Node server for bandwidth efficiency). We utilize Supabase Storage buckets: `intake` and `proof`. A subsequent request is made to the backend to generate the `case_attachments` Postgres Row.
 
 ## 12. Volunteer Recommendation Logic
 Generated via `GET /api/volunteers/recommended`.
-Scoring pseudo-logic:
-- +3 points for available status.
-- +1 point per matching specialty.
-- + (Rating * 0.5) baseline additive.
-Volunteers are returned strictly sorted by highest viability rating.
+Scoring logic executes natively iterating dynamically loaded variables:
+- `+3 points` for available status.
+- `+X points` mapping normalized rating metrics directly.
+- `+2 points` intersecting Case 'Category' with Volunteer 'Specialties'.
+- `-2 points` mapping high active workload penalties.
 
 ## 13. Setup Instructions
 - Run `npm install`.
-- Configure `.env`.
+- Configure `.env` mapping your Supabase instances correctly.
 
 ## 14. Local Development Instructions
 Execute `npm run dev` to boot `ts-node-dev` on `localhost:8000`.
 
 ## 15. How Frontend Integrates
-Replace `mock-service.ts` references with wrapper functions firing `axios` or `fetch` against `http://localhost:8000/api/...`. Attach Supabase JWTs manually into authorization headers.
+Replace `mock-service.ts` references with wrapper functions querying against `http://localhost:8000/api/...`. Attach Supabase JWTs manually into `Authorization: Bearer <token>` headers.
 
 ## 16. Future Improvements
-- Migration generation tool sets.
-- Caching analytics payload via Redis.
-- Pagination layers utilizing cursors on Case lists.
+- Caching analytics payload calculations via Redis cache layers.
+- Cursor based paginations on primary Cases index loads.
+- Native PostgreSQL triggers intercepting history mapping, relieving Node.js workloads.

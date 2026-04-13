@@ -6,10 +6,11 @@ import { UserRole } from '../constants';
 
 const router = Router();
 
-// Lock boundary down globally
 router.use(requireAuth);
 
-// Analytics payloads are strictly locked up to NGO Administrators only
 router.get('/overview', requireRole(UserRole.ADMIN), AnalyticsController.getOverview);
+router.get('/cases-by-status', requireRole(UserRole.ADMIN), AnalyticsController.getCasesByStatus);
+router.get('/cases-by-category', requireRole(UserRole.ADMIN), AnalyticsController.getCasesByCategory);
+router.get('/weekly-trend', requireRole(UserRole.ADMIN), AnalyticsController.getWeeklyTrend);
 
 export default router;

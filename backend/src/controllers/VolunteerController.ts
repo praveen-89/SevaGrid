@@ -1,23 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { APIResponse } from '../utils/APIResponse';
-import { AssignmentService } from '../services/AssignmentService';
 import { VolunteerService } from '../services/VolunteerService';
-import { Profile } from '../types';
-
-export class AssignmentController {
-  static async assign(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id: caseId } = req.params;
-      const { volunteerId, note } = req.body;
-      const admin = req.user as Profile;
-
-      const assignment = await AssignmentService.assignVolunteer(caseId, volunteerId, admin, note);
-      return APIResponse.success(res, assignment, 'Dispatch assigned perfectly', 201);
-    } catch (err) {
-      next(err);
-    }
-  }
-}
 
 export class VolunteerController {
   static async getVolunteers(req: Request, res: Response, next: NextFunction) {

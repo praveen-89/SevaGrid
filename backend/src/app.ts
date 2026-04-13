@@ -4,7 +4,7 @@ import helmet from 'helmet';
 
 // Route Imports
 import caseRoutes from './routes/case.routes';
-import orchestrationRoutes from './routes/orchestration.routes';
+import volunteerRoutes from './routes/volunteer.routes';
 import analyticsRoutes from './routes/analytics.routes';
 import { errorHandler } from './middleware/error.middleware';
 
@@ -17,7 +17,7 @@ app.use(express.json());
 
 // Application Domains Boundary Wiring
 app.use('/api/cases', caseRoutes);
-app.use('/api/orchestration', orchestrationRoutes); // /dispatch endpoints and /volunteers endpoints
+app.use('/api/volunteers', volunteerRoutes); 
 app.use('/api/analytics', analyticsRoutes);
 
 // Health Interceptor for cloud load balancers/docker verifications
